@@ -1,11 +1,28 @@
 $(info into cpp mkfile)
 LOCAL_PATH := $(call my-dir)
 $(info local path $(LOCAL_PATH))
+$(info ndk path $(ANDROID_NDK))
+$(info host os base $(HOST_TAG))
+$(info render script prebuilt root $(RENDERSCRIPT_TOOLCHAIN_PREBUILT_ROOT))
+$(info RENDERSCRIPT_PLATFORM_HEADER $(RENDERSCRIPT_PLATFORM_HEADER))
+$(info RENDERSCRIPT_TOOLCHAIN_HEADER $(RENDERSCRIPT_TOOLCHAIN_HEADER))
+$(info LOCAL_RENDERSCRIPT_TARGET_API $(LOCAL_RENDERSCRIPT_TARGET_API))
+$(info TARGET_ARCH $(TARGET_ARCH))
 
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := rs-prebuilt
+LOCAL_RS_PREBUILT_LIBS := $(RENDERSCRIPT_TOOLCHAIN_PREBUILT_ROOT)/platform/$(TARGET_ARCH)
+LOCAL_SRC_FILES := $(LOCAL_RS_PREBUILT_LIBS)/libRScpp_static.a
+LOCAL_EXPORT_C_INCLUDES := $(RENDERSCRIPT_PLATFORM_HEADER)/cpp \
+                           $(RENDERSCRIPT_PLATFORM_HEADER)/
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE    := renderscript
 LOCAL_CFLAGS := -std=c++11
-LOCAL_MODULE := hello-libs
-LOCAL_SRC_FILES := $(LOCAL_PATH)/hello.cpp
-LOCAL_LDLIBS := -llog -landroid
+LOCAL_SRC_FILES := RenderScript.cpp
+LOCAL_STATIC_LIBRARIES := rs-prebuilt
+LOCAL_LDLIBS    := -ljnigraphics -ldl -llog
 include $(BUILD_SHARED_LIBRARY)
-
 
