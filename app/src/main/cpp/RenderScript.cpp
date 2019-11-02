@@ -5,6 +5,7 @@
 #include <android/bitmap.h>
 #include <jni.h>
 #include <RenderScript.h>
+#include "ScriptC_threshold.h"
 
 using namespace android::RSC;
 
@@ -19,6 +20,7 @@ void unlockBitmap(JNIEnv *pEnv, jobject pImage) {
 }
 
 extern "C" {
+
 JNIEXPORT void JNICALL
 Java_com_packtpub_renderscriptmk_RenderScriptActivity_blur(
         JNIEnv *pEnv, jobject pClass, jstring pCacheDir, jobject pSrcImage,
@@ -63,9 +65,10 @@ Java_com_packtpub_renderscriptmk_RenderScriptActivity_blur(
     unlockBitmap(pEnv, pDstImage);
 }
 
+
 /*
 JNIEXPORT void JNICALL
-Java_com_packtpub_renderscript_RenderScriptActivity_threshold
+Java_com_packtpub_renderscriptmk_RenderScriptActivity_threshold
         (JNIEnv *pEnv, jobject pClass, jstring pCacheDir, jobject pSrcImage,
          jobject pDstImage, jfloat pThreshold) {
     const char *cacheDir = pEnv->GetStringUTFChars(pCacheDir, NULL);

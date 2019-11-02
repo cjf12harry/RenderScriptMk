@@ -12,6 +12,7 @@ import android.widget.SeekBar;
 
 import com.packtpub.renderscript.R;
 
+
 public class RenderScriptActivity extends Activity implements View.OnClickListener {
     static {
         System.loadLibrary("renderscript");
@@ -24,6 +25,7 @@ public class RenderScriptActivity extends Activity implements View.OnClickListen
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_renderscript);
 
@@ -48,6 +50,9 @@ public class RenderScriptActivity extends Activity implements View.OnClickListen
 
     private native void blur(String pCacheDir, Bitmap pSrcImage,
                              Bitmap pDstImage, float pRadius);
+
+    private native void threshold(String pCacheDir, Bitmap pSrcImage,
+                                  Bitmap pDstImage, float pThreshold);
 
     @Override
     public void onClick(View v) {
